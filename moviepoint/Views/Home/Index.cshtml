@@ -1,0 +1,70 @@
+﻿@model List<Movie>
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-12 col-md-6 mb-4">
+            <!-- Use col-12 for full width on small screens -->
+            <div class="card d-flex flex-row shadow-sm" style="width: 100%; height: 100%;">
+                <img src="~/movies/@item.ImgUrl" class="card-img-left" alt="..." style="width: 150px; height: auto; object-fit: cover;">
+                <div class="card-body d-flex flex-column">
+                    <h3 class="card-title">@item.Name</h3>
+
+                    <!-- Status Logic -->
+                    @{
+                        var currentDate = DateTime.Now;
+                        string status;
+                        string statusClass;
+                        string buttonClass;
+
+                        if (item.StartDate > currentDate)
+                        {
+                            status = "Upcoming";
+                            statusClass = "btn-warning"; // Yellow button for upcoming
+                            buttonClass = "btn-secondary"; // Grey button for 'Book Now'
+                        }
+                        else if (item.EndDate < currentDate)
+                        {
+                            status = "Expired";
+                            statusClass = "btn-secondary"; // Grey button for expired
+                            buttonClass = "btn-danger"; // Red button for 'Book Now'
+                        }
+                        else
+                        {
+                            status = "Available";
+                            statusClass = "btn-success"; // Green button for available
+                            buttonClass = "btn-success"; // Green button for 'Book Now'
+                        }
+                    }
+
+                    <!-- Displaying Status as a Button -->
+                    <div class="mb-2">
+                        <button class="btn @statusClass" disabled>@status</button>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-6"><strong>Price:</strong> @item.Price</div>
+                        <div class="col-6"><strong>Cinema:</strong> @item.Cinema.Name</div>
+                        <div class="col-6"><strong>Start Date:</strong> @item.StartDate.ToString("yyyy-MM-dd HH:mm")</div>
+                        <div class="col-6"><strong>End Date:</strong> @item.EndDate.ToString("yyyy-MM-dd HH:mm")</div>
+                        <div class="col-6"><strong>Category:</strong> @item.Category.Name</div>
+                    </div>
+                    <div class="mt-auto d-flex justify-content-between">
+                        <a href="/home/viewmore?movieId=@item.Id" class="btn btn-primary">More details...</a>
+                        <button class="btn @buttonClass">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .card {
+        min-height: 350px; /* Set a minimum height for all cards */
+        display: flex; /* Ensure flex layout for consistent height */
+    }
+
+    .card-body {
+        flex-grow: 1; /* Allow the card body to take up remaining space */
+    }
+</style>

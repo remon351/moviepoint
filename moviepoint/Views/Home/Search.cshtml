@@ -1,0 +1,28 @@
+﻿@model List<Movie>
+
+<h1 class="text-center my-4">Search Results</h1>
+
+<div class="row">
+    @if (Model != null && Model.Any())
+    {
+        foreach (var movie in Model)
+        {
+            <div class="col-12 col-md-4 mb-4">
+                <div class="card">
+                    <img src="~/movies/@movie.ImgUrl" class="card-img-top" alt="@movie.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@movie.Name</h5>
+                        <p class="card-text">@movie.Description</p>
+                        <a href="/Home/viewmore?movieId=@movie.Id" class="btn btn-primary">View More</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12">
+            <h4>No movies found matching your search.</h4>
+        </div>
+    }
+</div>

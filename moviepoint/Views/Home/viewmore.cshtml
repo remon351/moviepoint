@@ -1,0 +1,78 @@
+﻿@model Movie
+<div class="row">
+    <div class="col-12 col-md-6 mb-4">
+        <div class="card d-flex flex-row shadow-sm" style="width: 100%; height: 100%;">
+            <img src="~/movies/@Model.ImgUrl" class="card-img-left" alt="..." style="width: 150px; height: auto; object-fit: cover;">
+            <div class="card-body d-flex flex-column">
+                <h3 class="card-title">@Model.Name</h3>
+                <h5 class="card-title">@Model.Description</h5>
+
+                <div class="row mb-2">
+                    <div class="col-6"><strong>Price:</strong> @Model.Price</div>
+                    <div class="col-6"><strong>Cinema:</strong> @Model.Cinema.Name</div>
+                    <div class="col-6"><strong>Start Date:</strong> @Model.StartDate.ToString("yyyy-MM-dd HH:mm")</div>
+                    <div class="col-6"><strong>End Date:</strong> @Model.EndDate.ToString("yyyy-MM-dd HH:mm")</div>
+                    <div class="col-6"><strong>Category:</strong> @Model.Category.Name</div>
+
+                    <!-- Display Actors' Profile Pictures -->
+                    <div class="cast-images d-flex">
+                        @foreach (var actor in Model.Actors)
+                        {
+                            <a href="/Home/ActorDetails?actorId=@actor.Id" title="@actor.FirstName @actor.LastName">
+                                <img src="~/cast/@actor.ProfilePicture" class="cast-img me-2" alt="@actor.FirstName @actor.LastName">
+                            </a>
+                        }
+                    </div>
+
+                    <!-- Display Movie Video -->
+                    <div class="video mt-3">
+                        @if (!string.IsNullOrEmpty(Model.TrailerUrl)) 
+                        {
+                            <video width="100%" height="250" controls>
+                                <source src="@Model.TrailerUrl" type="video/mp4"> <!-- Assuming it's an mp4 video -->
+                                Your browser does not support the video tag.
+                            </video>
+                        }
+
+                    </div>
+                </div>
+
+                <div class="mt-auto d-flex justify-content-between">
+                    <button class="btn btn-primary">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        min-height: 350px;
+        display: flex;
+    }
+
+    .card-body {
+        flex-grow: 1;
+    }
+
+    /* Style the cast images */
+    .cast-images {
+        position: relative;
+        display: flex; /* Display images in a row */
+    }
+
+    .cast-img {
+        width: 50px; /* Set the width to make the images small */
+        height: auto;
+        border-radius: 50%; /* Make them circular */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+    }
+
+    .me-2 {
+        margin-right: 10px; /* Add spacing between the images */
+    }
+
+    .video {
+        margin-top: 15px; /* Add spacing between actors and video */
+    }
+</style>

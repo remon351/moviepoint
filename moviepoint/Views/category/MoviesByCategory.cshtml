@@ -1,0 +1,23 @@
+﻿@model List<Movie>
+
+<h1 class="text-center my-4">Movies in This Category</h1>
+
+<div class="row">
+    @foreach (var movie in Model)
+    {
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card">
+                <img src="~/movies/@movie.ImgUrl" class="card-img-top" alt="@movie.Name">
+                <h5 class="card-title">@movie.Name</h5>
+                <div class="card-body">
+                    <h6 class="card-title">price: @movie.Price</h6>
+                    <h6 class="card-title">cinema: @movie.Cinema.Name</h6>
+                    <h6 class="card-title">StartDate: @movie.StartDate</h6>
+                    <h6 class="card-title">EndDate: @movie.EndDate</h6>
+                    <h6 class="card-title">Category: @movie.Category.Name</h6>
+                    <a href="/Home/ViewMore?movieId=@movie.Id" class="btn btn-primary">View More</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
